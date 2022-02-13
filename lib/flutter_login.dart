@@ -48,6 +48,8 @@ class LoginProvider {
   /// but [button] will take preference over [icon]
   final IconData? icon;
 
+  final Widget? iconWidget;
+
   /// The label shown under the provider
   final String label;
 
@@ -69,11 +71,12 @@ class LoginProvider {
   const LoginProvider({
     this.button,
     this.icon,
+    this.iconWidget,
     this.callback,
     this.label = '',
     this.providerNeedsSignUpCallback,
     // this.animated = true
-  }) : assert(button != null || icon != null);
+  }) : assert(button != null || icon != null || iconWidget != null);
 }
 
 class _AnimationTimeDilationDropdown extends StatelessWidget {

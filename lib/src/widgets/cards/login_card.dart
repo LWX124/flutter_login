@@ -464,6 +464,13 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
           button: loginProvider.button,
           callback: loginProvider.callback,
         ));
+      } else if (loginProvider.iconWidget != null) {
+        iconProvidersList.add(LoginProvider(
+          iconWidget: loginProvider.iconWidget,
+          label: loginProvider.label,
+          button: loginProvider.button,
+          callback: loginProvider.callback,
+        ));
       }
     }
     if (buttonProvidersList.isNotEmpty) {
@@ -519,7 +526,8 @@ class _LoginCardState extends State<_LoginCard> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   AnimatedIconButton(
-                    icon: loginProvider.icon!,
+                    icon: loginProvider.icon,
+                    iconWidget: loginProvider.iconWidget,
                     controller: _providerControllerList[index],
                     tooltip: loginProvider.label,
                     onPressed: () => _loginProviderSubmit(

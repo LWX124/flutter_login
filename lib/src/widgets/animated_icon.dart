@@ -11,17 +11,20 @@ class AnimatedIconButton extends StatefulWidget {
     required this.tooltip,
     required this.onPressed,
     required this.controller,
-    required this.icon,
+    this.icon,
+    this.iconWidget,
     this.loadingColor,
     this.color,
-  }) : super(key: key);
+  })  : assert(icon != null || iconWidget != null),
+        super(key: key);
 
   final String tooltip;
   final Color? color;
   final Color? loadingColor;
   final Function onPressed;
   final AnimationController controller;
-  final IconData icon;
+  final IconData? icon;
+  final Widget? iconWidget;
 
   @override
   _AnimatedIconButtonState createState() => _AnimatedIconButtonState();
@@ -174,7 +177,9 @@ class _AnimatedIconButtonState extends State<AnimatedIconButton>
           animation: _colorAnimation,
           builder: (context, child) => Material(
             shape: buttonTheme.shape,
-            color: _colorAnimation.value,
+            color: widget.iconWidget != null
+                ? Colors.white
+                : _colorAnimation.value,
             shadowColor: _color,
             elevation: !_isLoading
                 ? (_hover
@@ -185,7 +190,7 @@ class _AnimatedIconButtonState extends State<AnimatedIconButton>
           ),
           child: InkWell(
             onTap: !_isLoading ? widget.onPressed as void Function()? : null,
-            splashColor: buttonTheme.splashColor,
+            // splashColor: buttonTheme.splashColor,
             customBorder: buttonTheme.shape,
             onHighlightChanged: (value) => setState(() => _hover = value),
             child: SizeTransition(
@@ -195,7 +200,9 @@ class _AnimatedIconButtonState extends State<AnimatedIconButton>
                 width: _height,
                 height: _height,
                 alignment: Alignment.center,
-                child: Icon(widget.icon, color: Colors.white),
+                child: widget.iconWidget != null
+                    ? widget.iconWidget
+                    : Icon(widget.icon, color: Colors.white),
               ),
             ),
           ),
